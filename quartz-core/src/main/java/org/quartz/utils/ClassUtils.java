@@ -20,6 +20,9 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * 工具类，查注解是否在类或接口上
+ */
 public class ClassUtils {
 
     

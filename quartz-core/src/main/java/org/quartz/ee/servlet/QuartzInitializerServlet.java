@@ -31,6 +31,8 @@ import org.quartz.impl.StdSchedulerFactory;
 
 /**
  * <p>
+ * quartz HttpServlet实例，用于实例化quartzScheduler并启动调度线程
+ *
  * A Servlet that can be used to initialize Quartz, if configured as a
  * load-on-startup servlet in a web application.
  * </p>

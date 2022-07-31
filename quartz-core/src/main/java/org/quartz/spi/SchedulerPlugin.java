@@ -21,7 +21,8 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 
 /**
- * <p>
+ * <p>调度器插件spi
+ *
  * Provides an interface for a class to become a "plugin" to Quartz.
  * </p>
  * 

@@ -19,6 +19,8 @@
 package org.quartz;
 
 /**
+ * 指示重名jobDetail或Trigger已存在异常
+ *
  * An exception that is thrown to indicate that an attempt to store a new
  * object (i.e. <code>{@link org.quartz.JobDetail}</code>,<code>{@link Trigger}</code>
  * or <code>{@link Calendar}</code>) in a <code>{@link Scheduler}</code>

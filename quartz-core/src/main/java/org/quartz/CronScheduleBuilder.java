@@ -24,6 +24,8 @@ import org.quartz.impl.triggers.CronTriggerImpl;
 import org.quartz.spi.MutableTrigger;
 
 /**
+ * Cron调度触发器构建器实现
+ *
  * <code>CronScheduleBuilder</code> is a {@link ScheduleBuilder} that defines
  * {@link CronExpression}-based schedules for <code>Trigger</code>s.
  * 

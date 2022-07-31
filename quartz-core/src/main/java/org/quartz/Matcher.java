@@ -22,6 +22,8 @@ import java.io.Serializable;
 import org.quartz.utils.Key;
 
 /**
+ * 匹配器抽象
+ *
  * Matchers can be used in various {@link Scheduler} API methods to 
  * select the entities that should be operated upon.
  *  

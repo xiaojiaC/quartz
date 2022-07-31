@@ -24,7 +24,8 @@ import java.util.Properties;
 import java.util.StringTokenizer;
 
 /**
- * <p>
+ * <p>属性解析器，用于解析配置文件然后构建QuartzScheduler
+ *
  * This is an utility calss used to parse the properties.
  * </p>
  * 

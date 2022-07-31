@@ -20,6 +20,8 @@ import org.quartz.Matcher;
 import org.quartz.utils.Key;
 
 /**
+ * 唯一键匹配器
+ *
  * Matches on the complete key being equal (both name and group). 
  *  
  * @author jhouse

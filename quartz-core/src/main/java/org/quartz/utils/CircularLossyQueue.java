@@ -20,6 +20,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
+ * 简单的环状队列实现
+ *
  * An implementation of a CircularQueue data-structure.
  * When the number of items added exceeds the maximum capacity, items that were
  * added first are lost.

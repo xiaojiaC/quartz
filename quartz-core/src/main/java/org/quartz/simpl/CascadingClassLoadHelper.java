@@ -25,6 +25,8 @@ import java.io.InputStream;
 import org.quartz.spi.ClassLoadHelper;
 
 /**
+ * 级联类加载器实现（就是迭代一堆预置的类加载加载类）
+ *
  * A <code>ClassLoadHelper</code> uses all of the <code>ClassLoadHelper</code>
  * types that are found in this package in its attempts to load a class, when
  * one scheme is found to work, it is promoted to the scheme that will be used
@@ -59,9 +61,9 @@ public class CascadingClassLoadHelper implements ClassLoadHelper {
      * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      */
 
-    private LinkedList<ClassLoadHelper> loadHelpers;
+    private LinkedList<ClassLoadHelper> loadHelpers; // 预置类加载器链表
 
-    private ClassLoadHelper bestCandidate;
+    private ClassLoadHelper bestCandidate; // 类加载器加载到类则简单认为它最佳，缓存一下方便快速加载
 
     /*
      * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -79,10 +81,10 @@ public class CascadingClassLoadHelper implements ClassLoadHelper {
     public void initialize() {
         loadHelpers = new LinkedList<ClassLoadHelper>();
 
-        loadHelpers.add(new LoadingLoaderClassLoadHelper());
-        loadHelpers.add(new SimpleClassLoadHelper());
-        loadHelpers.add(new ThreadContextClassLoadHelper());
-        loadHelpers.add(new InitThreadContextClassLoadHelper());
+        loadHelpers.add(new LoadingLoaderClassLoadHelper()); // 加载该类的类加载器
+        loadHelpers.add(new SimpleClassLoadHelper()); // Class.forName 类加载器
+        loadHelpers.add(new ThreadContextClassLoadHelper()); // 线程上下文类加载器
+        loadHelpers.add(new InitThreadContextClassLoadHelper()); // 从调用者线程窃取线程上下文类加载器
         
         for(ClassLoadHelper loadHelper: loadHelpers) {
             loadHelper.initialize();
@@ -94,7 +96,7 @@ public class CascadingClassLoadHelper implements ClassLoadHelper {
      */
     public Class<?> loadClass(String name) throws ClassNotFoundException {
 
-        if (bestCandidate != null) {
+        if (bestCandidate != null) { // 有上次最佳者则使用，加载异常则重置为空
             try {
                 return bestCandidate.loadClass(name);
             } catch (Throwable t) {
@@ -106,7 +108,7 @@ public class CascadingClassLoadHelper implements ClassLoadHelper {
         Class<?> clazz = null;
         ClassLoadHelper loadHelper = null;
 
-        Iterator<ClassLoadHelper> iter = loadHelpers.iterator();
+        Iterator<ClassLoadHelper> iter = loadHelpers.iterator(); // 遍历加载类
         while (iter.hasNext()) {
             loadHelper = iter.next();
 

@@ -61,8 +61,8 @@ public class CalendarIntervalTriggerPersistenceDelegate extends SimpleProperties
         ScheduleBuilder<?> sb = CalendarIntervalScheduleBuilder.calendarIntervalSchedule()
             .withInterval(props.getInt1(), IntervalUnit.valueOf(props.getString1()))
             .inTimeZone(tz)
-            .preserveHourOfDayAcrossDaylightSavings(props.isBoolean1())
-            .skipDayIfHourDoesNotExist(props.isBoolean2());
+            .preserveHourOfDayAcrossDaylightSavings(props.isBoolean1()) // 该字段含义？
+            .skipDayIfHourDoesNotExist(props.isBoolean2()); // 该字段含义？
         
         int timesTriggered = props.getInt2();
         

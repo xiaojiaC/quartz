@@ -1,6 +1,8 @@
 package org.quartz.spi;
 
 /**
+ * 线程池执行器spi
+ *
  * Allows different strategies for scheduling threads. The {@link #initialize()}
  * method is required to be called before the first call to
  * {@link #execute(Thread)}. The Thread containing the work to be performed is

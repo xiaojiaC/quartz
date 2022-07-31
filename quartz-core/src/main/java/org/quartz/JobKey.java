@@ -20,6 +20,8 @@ package org.quartz;
 import org.quartz.utils.Key;
 
 /**
+ * 唯一标识一个JobDetail
+ *
  * Uniquely identifies a {@link JobDetail}.
  * 
  * <p>Keys are composed of both a name and group, and the name must be unique

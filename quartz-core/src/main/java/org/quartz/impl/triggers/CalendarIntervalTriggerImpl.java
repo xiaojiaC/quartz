@@ -37,6 +37,8 @@ import org.quartz.TriggerUtils;
 
 
 /**
+ * 用于根据重复的日历时间间隔触发JobDetail
+ *
  * <p>A concrete <code>{@link Trigger}</code> that is used to fire a <code>{@link org.quartz.JobDetail}</code>
  * based upon repeating calendar time intervals.</p>
  * 

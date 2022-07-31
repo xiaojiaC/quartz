@@ -52,7 +52,8 @@ public abstract class SimplePropertiesTriggerPersistenceDelegateSupport implemen
     protected static final String COL_DEC_PROP_2 = "DEC_PROP_2";
     protected static final String COL_BOOL_PROP_1 = "BOOL_PROP_1";
     protected static final String COL_BOOL_PROP_2 = "BOOL_PROP_2";
-    
+
+    // select * from QRTZ_SIMPROP_TRIGGERS where SCHED_NAME = x and TRIGGER_NAME = ? and TRIGGER_GROUP = ?
     protected static final String SELECT_SIMPLE_PROPS_TRIGGER = "SELECT *" + " FROM "
         + TABLE_PREFIX_SUBST + TABLE_SIMPLE_PROPERTIES_TRIGGERS + " WHERE "
         + COL_SCHEDULER_NAME + " = " + SCHED_NAME_SUBST
@@ -94,8 +95,10 @@ public abstract class SimplePropertiesTriggerPersistenceDelegateSupport implemen
         this.schedNameLiteral = "'" + schedName + "'";
     }
 
+    // 按对应的坑位填好，插入时用
     protected abstract SimplePropertiesTriggerProperties getTriggerProperties(OperableTrigger trigger);
-    
+
+    // 从库捞出来按对应的坑位解析，还原出触发器
     protected abstract TriggerPropertyBundle getTriggerPropertyBundle(SimplePropertiesTriggerProperties properties);
     
     public int deleteExtendedTriggerProperties(Connection conn, TriggerKey triggerKey) throws SQLException {

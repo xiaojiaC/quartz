@@ -21,7 +21,8 @@ package org.quartz.helpers;
 import org.quartz.core.QuartzScheduler;
 
 /**
- * <p>
+ * <p>版本打印
+ *
  * Prints the version of Quartz on stdout.
  * </p>
  * 

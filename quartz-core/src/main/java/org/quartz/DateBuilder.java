@@ -23,6 +23,8 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 /**
+ * 日期构建器
+ *
  * <code>DateBuilder</code> is used to conveniently create 
  * <code>java.util.Date</code> instances that meet particular criteria.
  *  

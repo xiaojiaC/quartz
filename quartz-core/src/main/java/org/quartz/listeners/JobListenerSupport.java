@@ -22,6 +22,8 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 /**
+ * JobListener适配器
+ *
  * A helpful abstract base class for implementors of 
  * <code>{@link org.quartz.JobListener}</code>.
  * 

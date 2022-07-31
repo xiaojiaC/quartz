@@ -42,11 +42,11 @@ import org.slf4j.LoggerFactory;
 public class AttributeRestoringConnectionInvocationHandler implements InvocationHandler {
     private Connection conn;
     
-    private boolean overwroteOriginalAutoCommitValue;
+    private boolean overwroteOriginalAutoCommitValue; // 是否产生重写
     private boolean overwroteOriginalTxIsolationValue;
 
     // Set if overwroteOriginalAutoCommitValue is true
-    private boolean originalAutoCommitValue; 
+    private boolean originalAutoCommitValue; // 如果产出覆盖则记录覆盖前的原始值
 
     // Set if overwroteOriginalTxIsolationValue is true
     private int originalTxIsolationValue;
@@ -135,7 +135,7 @@ public class AttributeRestoringConnectionInvocationHandler implements Invocation
      * attributes of the wrapped connection to their original values (if they
      * were overwritten).
      */
-    public void restoreOriginalAtributes() {
+    public void restoreOriginalAtributes() { // 还原原设置值（autoCommit、transactionIsolation）
         try {
             if (overwroteOriginalAutoCommitValue) {
                 conn.setAutoCommit(originalAutoCommitValue);

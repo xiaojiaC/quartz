@@ -17,6 +17,7 @@ package org.quartz.impl.jdbcjobstore;
 
 import java.math.BigDecimal;
 
+// 触发器属性集（DailyTimeIntervalTrigger 和 CalendarIntervalTrigger用）
 public class SimplePropertiesTriggerProperties {
 
     private String string1;

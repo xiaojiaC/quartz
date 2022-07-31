@@ -19,6 +19,8 @@ package org.quartz.impl.jdbcjobstore;
 
 /**
  * <p>
+ * 调度器状态记录
+ *
  * Conveys a scheduler-instance state record.
  * </p>
  * 
@@ -36,11 +38,11 @@ public class SchedulerStateRecord implements java.io.Serializable {
      * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      */
 
-    private String schedulerInstanceId;
+    private String schedulerInstanceId; // 调度器实例
 
-    private long checkinTimestamp;
+    private long checkinTimestamp; // 最后一次检入时间戳
 
-    private long checkinInterval;
+    private long checkinInterval; // 检入间隔
 
     /*
      * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

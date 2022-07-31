@@ -19,7 +19,8 @@
 package org.quartz;
 
 /**
- * <p>
+ * <p>quartz Job接口抽象，实现者必须有一个public无参构造器
+ *
  * The interface to be implemented by classes which represent a 'job' to be
  * performed.
  * </p>

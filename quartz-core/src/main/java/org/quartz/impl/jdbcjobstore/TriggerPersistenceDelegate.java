@@ -25,6 +25,8 @@ import org.quartz.TriggerKey;
 import org.quartz.spi.OperableTrigger;
 
 /**
+ * 触发器持久化委托，可用于某些触发器存储扩展属性，比如SimpleTrigger存储timesTriggered
+ *
  * An interface which provides an implementation for storing a particular
  * type of <code>Trigger</code>'s extended properties.
  *  
@@ -46,7 +48,7 @@ public interface TriggerPersistenceDelegate {
 
     public TriggerPropertyBundle loadExtendedTriggerProperties(Connection conn, TriggerKey triggerKey) throws SQLException;
     
-    
+    // 触发器属性集-->可用于构建触发器及设置扩展属性
     class TriggerPropertyBundle {
         
         private ScheduleBuilder<?> sb;

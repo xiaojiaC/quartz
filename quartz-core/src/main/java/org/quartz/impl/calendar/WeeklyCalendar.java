@@ -24,6 +24,10 @@ import org.quartz.Calendar;
 
 /**
  * <p>
+ * 周日历（排除一周中的任意周几）
+ *
+ * 指定每星期的星期几，可选值比如为java.util.Calendar.SUNDAY。精度是【天】
+ *
  * This implementation of the Calendar excludes a set of days of the week. You
  * may use it to exclude weekends for example. But you may define any day of
  * the week.  By default it excludes SATURDAY and SUNDAY.

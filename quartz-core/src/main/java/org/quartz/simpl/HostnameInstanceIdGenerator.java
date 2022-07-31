@@ -22,7 +22,8 @@ import org.quartz.SchedulerException;
 import org.quartz.spi.InstanceIdGenerator;
 
 /**
- * <p>
+ * <p>主机名实例id生成器（就是拿主机名做id）
+ *
  * <code>InstanceIdGenerator</code> that names the scheduler instance using 
  * just the machine hostname.
  * </p>

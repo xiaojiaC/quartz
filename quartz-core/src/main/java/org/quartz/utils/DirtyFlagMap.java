@@ -25,7 +25,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * <p>
+ * <p>脏值Map
+ *
  * An implementation of <code>Map</code> that wraps another <code>Map</code>
  * and flags itself 'dirty' when it is modified.
  * </p>

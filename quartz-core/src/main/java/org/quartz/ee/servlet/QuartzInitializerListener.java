@@ -29,6 +29,8 @@ import org.quartz.impl.StdSchedulerFactory;
 
 /**
  * <p>
+ * 监听器方式初始化quartz
+ *
  * A ServletContextListner that can be used to initialize Quartz.
  * </p>
  *

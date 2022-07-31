@@ -23,6 +23,8 @@ import org.quartz.spi.MutableTrigger;
 import org.quartz.utils.Key;
 
 /**
+ * 触发器构建器
+ *
  * <code>TriggerBuilder</code> is used to instantiate {@link Trigger}s.
  * 
  * <p>The builder will always try to keep itself in a valid state, with 

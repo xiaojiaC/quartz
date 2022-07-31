@@ -43,10 +43,12 @@ public class SimpleTriggerPersistenceDelegate implements TriggerPersistenceDeleg
         return TTYPE_SIMPLE;
     }
 
+    // 是SimpleTrigger
     public boolean canHandleTriggerType(OperableTrigger trigger) {
         return ((trigger instanceof SimpleTriggerImpl) && !((SimpleTriggerImpl)trigger).hasAdditionalProperties());
     }
 
+    // 删除SimpleTrigger触发器
     public int deleteExtendedTriggerProperties(Connection conn, TriggerKey triggerKey) throws SQLException {
         PreparedStatement ps = null;
 
@@ -61,6 +63,7 @@ public class SimpleTriggerPersistenceDelegate implements TriggerPersistenceDeleg
         }
     }
 
+    // 插入SimpleTrigger触发器
     public int insertExtendedTriggerProperties(Connection conn, OperableTrigger trigger, String state, JobDetail jobDetail) throws SQLException, IOException {
 
         SimpleTrigger simpleTrigger = (SimpleTrigger)trigger;
@@ -81,6 +84,7 @@ public class SimpleTriggerPersistenceDelegate implements TriggerPersistenceDeleg
         }
     }
 
+    // 查询SimpleTrigger触发器（构建成一个触发器属性包）
     public TriggerPropertyBundle loadExtendedTriggerProperties(Connection conn, TriggerKey triggerKey) throws SQLException {
 
         PreparedStatement ps = null;
@@ -114,6 +118,7 @@ public class SimpleTriggerPersistenceDelegate implements TriggerPersistenceDeleg
         }
     }
 
+    // 更新SimpleTrigger触发器（repeatCount、repeatInterval、timesTriggered）
     public int updateExtendedTriggerProperties(Connection conn, OperableTrigger trigger, String state, JobDetail jobDetail) throws SQLException, IOException {
 
         SimpleTrigger simpleTrigger = (SimpleTrigger)trigger;

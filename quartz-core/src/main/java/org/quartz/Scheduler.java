@@ -29,6 +29,8 @@ import org.quartz.spi.JobFactory;
 import org.quartz.utils.Key;
 
 /**
+ * 调度器抽象
+ *
  * This is the main interface of a Quartz Scheduler.
  * 
  * <p>

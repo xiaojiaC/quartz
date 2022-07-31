@@ -111,6 +111,7 @@ public class CronTriggerPersistenceDelegate implements TriggerPersistenceDelegat
         }
     }
 
+    // 更新CronTrigger（cronExpression、timeZoneId）
     public int updateExtendedTriggerProperties(Connection conn, OperableTrigger trigger, String state, JobDetail jobDetail) throws SQLException, IOException {
 
         CronTrigger cronTrigger = (CronTrigger)trigger;

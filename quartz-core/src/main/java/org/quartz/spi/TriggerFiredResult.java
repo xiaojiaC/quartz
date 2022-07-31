@@ -1,6 +1,8 @@
 package org.quartz.spi;
 
 /**
+ * 触发器点火结果
+ *
  * @author lorban
  */
 public class TriggerFiredResult {

@@ -20,6 +20,8 @@ package org.quartz;
 import java.io.Serializable;
 
 /**
+ * Job实例的详情抽象
+ *
  * Conveys the detail properties of a given <code>Job</code> instance. JobDetails are
  * to be created/defined with {@link JobBuilder}.
  * 

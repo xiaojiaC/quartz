@@ -38,6 +38,8 @@ import org.quartz.impl.matchers.GroupMatcher;
 
 /**
  * <p>
+ * 作业仓储spi
+ *
  * The interface to be implemented by classes that want to provide a <code>{@link org.quartz.Job}</code>
  * and <code>{@link org.quartz.Trigger}</code> storage mechanism for the
  * <code>{@link org.quartz.core.QuartzScheduler}</code>'s use.

@@ -23,6 +23,8 @@ import java.net.URL;
 import java.io.InputStream;
 
 /**
+ * 本地类加载器（取得该Class对象的类装载器）
+ *
  * A <code>ClassLoadHelper</code> that uses either the loader of it's own
  * class (<code>this.getClass().getClassLoader().loadClass( .. )</code>).
  * 

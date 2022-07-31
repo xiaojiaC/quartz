@@ -22,6 +22,8 @@ import org.quartz.TriggerKey;
 import org.quartz.utils.Key;
 
 /**
+ * 匹配所有
+ *
  * Matches on the complete key being equal (both name and group). 
  *  
  * @author jhouse

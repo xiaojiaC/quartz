@@ -105,7 +105,7 @@ public class QuartzScheduler implements RemotableQuartzScheduler {
     private static String VERSION_MINOR = "UNKNOWN";
     private static String VERSION_ITERATION = "UNKNOWN";
 
-    static {
+    static { // 解析 quartz-build.properties 设置版本信息
         Properties props = new Properties();
         InputStream is = null;
         try {
@@ -145,43 +145,43 @@ public class QuartzScheduler implements RemotableQuartzScheduler {
      * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      */
 
-    private QuartzSchedulerResources resources;
+    private QuartzSchedulerResources resources; // 资源池
 
-    private QuartzSchedulerThread schedThread;
+    private QuartzSchedulerThread schedThread; // 主调度线程
 
-    private ThreadGroup threadGroup;
+    private ThreadGroup threadGroup; // 线程组
 
-    private SchedulerContext context = new SchedulerContext();
+    private SchedulerContext context = new SchedulerContext(); // 调度器上下文
 
-    private ListenerManager listenerManager = new ListenerManagerImpl();
+    private ListenerManager listenerManager = new ListenerManagerImpl(); // 监听器管理器
     
-    private HashMap<String, JobListener> internalJobListeners = new HashMap<String, JobListener>(10);
+    private HashMap<String, JobListener> internalJobListeners = new HashMap<String, JobListener>(10); // 内置job监听器
 
-    private HashMap<String, TriggerListener> internalTriggerListeners = new HashMap<String, TriggerListener>(10);
+    private HashMap<String, TriggerListener> internalTriggerListeners = new HashMap<String, TriggerListener>(10); // 内置触发器监听器
 
-    private ArrayList<SchedulerListener> internalSchedulerListeners = new ArrayList<SchedulerListener>(10);
+    private ArrayList<SchedulerListener> internalSchedulerListeners = new ArrayList<SchedulerListener>(10); // 内置调度器监听器
 
-    private JobFactory jobFactory = new PropertySettingJobFactory();
+    private JobFactory jobFactory = new PropertySettingJobFactory(); // 可设置jobDataMap属性的job工厂
     
-    ExecutingJobsManager jobMgr = null;
+    ExecutingJobsManager jobMgr = null; // 执行时job管理器（本身是个job监听器，维护调度器执行中的jobs）
 
-    ErrorLogger errLogger = null;
+    ErrorLogger errLogger = null; // 错误日志记录器（本身是个调度器监听器，调度出错时打印error日志）
 
-    private SchedulerSignaler signaler;
+    private SchedulerSignaler signaler; // 调度器信号器（谁持有谁就能给我传一些信号）
 
     private Random random = new Random();
 
-    private ArrayList<Object> holdToPreventGC = new ArrayList<Object>(5);
+    private ArrayList<Object> holdToPreventGC = new ArrayList<Object>(5); // 强引用防止gc回收（用于持有单例对象防止被回收）
 
     private boolean signalOnSchedulingChange = true;
 
-    private volatile boolean closed = false;
-    private volatile boolean shuttingDown = false;
+    private volatile boolean closed = false; // 是否已关闭
+    private volatile boolean shuttingDown = false; // 是否正在关闭
     private boolean boundRemotely = false;
 
     private QuartzSchedulerMBean jmxBean = null;
     
-    private Date initialStart = null;
+    private Date initialStart = null; // 初次启动时间
 
     private final Logger log = LoggerFactory.getLogger(getClass());
     
@@ -214,7 +214,7 @@ public class QuartzScheduler implements RemotableQuartzScheduler {
 
         this.schedThread = new QuartzSchedulerThread(this, resources);
         ThreadExecutor schedThreadExecutor = resources.getThreadExecutor();
-        schedThreadExecutor.execute(this.schedThread);
+        schedThreadExecutor.execute(this.schedThread); // 启动主调度线程
         if (idleWaitTime > 0) {
             this.schedThread.setIdleWaitTime(idleWaitTime);
         }
@@ -532,22 +532,22 @@ public class QuartzScheduler implements RemotableQuartzScheduler {
 
         // QTZ-212 : calling new schedulerStarting() method on the listeners
         // right after entering start()
-        notifySchedulerListenersStarting();
+        notifySchedulerListenersStarting(); // 通知所有调度器监听器（调度器正在启动）
 
-        if (initialStart == null) {
+        if (initialStart == null) { // 第一次启动
             initialStart = new Date();
-            this.resources.getJobStore().schedulerStarted();            
+            this.resources.getJobStore().schedulerStarted(); // 告诉JobStore初次启动，你初始化 ClusterManager、MisfireHandler吧
             startPlugins();
         } else {
-            resources.getJobStore().schedulerResumed();
+            resources.getJobStore().schedulerResumed(); // 告诉JobStore再次启动，调度器又恢复运行了
         }
 
-        schedThread.togglePause(false);
+        schedThread.togglePause(false); // 调度器启动后，指示主调度线程取消暂停
 
         getLog().info(
                 "Scheduler " + resources.getUniqueIdentifier() + " started.");
         
-        notifySchedulerListenersStarted();
+        notifySchedulerListenersStarted(); // 通知所有调度器监听器（调度器启动完成）
     }
 
     public void startDelayed(final int seconds) throws SchedulerException
@@ -567,7 +567,7 @@ public class QuartzScheduler implements RemotableQuartzScheduler {
                 }
             }
         });
-        t.start();
+        t.start(); // 延迟启动
     }
 
     /**
@@ -1859,7 +1859,7 @@ J     *
                     continue;
                 tl.triggerFired(jec.getTrigger(), jec);
                 
-                if(tl.vetoJobExecution(jec.getTrigger(), jec)) {
+                if(tl.vetoJobExecution(jec.getTrigger(), jec)) { // 看是否有触发器监听器否决执行，一旦有一个否决执行则不执行
                     vetoedExecution = true;
                 }
             } catch (Exception e) {
@@ -1924,7 +1924,7 @@ J     *
             try {
                 if(!matchJobListener(jl, jec.getJobDetail().getKey()))
                     continue;
-                jl.jobToBeExecuted(jec);
+                jl.jobToBeExecuted(jec); // 通知job监听器，任务即将执行
             } catch (Exception e) {
                 SchedulerException se = new SchedulerException(
                         "JobListener '" + jl.getName() + "' threw exception: "
@@ -1944,7 +1944,7 @@ J     *
             try {
                 if(!matchJobListener(jl, jec.getJobDetail().getKey()))
                     continue;
-                jl.jobExecutionVetoed(jec);
+                jl.jobExecutionVetoed(jec); // 通知job监听器，job被否决执行
             } catch (Exception e) {
                 SchedulerException se = new SchedulerException(
                         "JobListener '" + jl.getName() + "' threw exception: "
@@ -2415,7 +2415,7 @@ class ErrorLogger extends SchedulerListenerSupport {
 //
 /////////////////////////////////////////////////////////////////////////////
 
-class ExecutingJobsManager implements JobListener {
+class ExecutingJobsManager implements JobListener { // 执行时job管理器
     HashMap<String, JobExecutionContext> executingJobs = new HashMap<String, JobExecutionContext>();
 
     AtomicInteger numJobsFired = new AtomicInteger(0);

@@ -21,6 +21,8 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 /**
+ * Cron触发器
+ *
  * The public interface for inspecting settings specific to a CronTrigger, .
  * which is used to fire a <code>{@link org.quartz.Job}</code>
  * at given moments in time, defined with Unix 'cron-like' schedule definitions.

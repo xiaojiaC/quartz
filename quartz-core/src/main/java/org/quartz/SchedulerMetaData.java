@@ -21,6 +21,8 @@ package org.quartz;
 import java.util.Date;
 
 /**
+ * 描述给定调度器实例的设置和功能
+ *
  * Describes the settings and capabilities of a given <code>{@link Scheduler}</code>
  * instance.
  * 

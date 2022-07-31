@@ -41,6 +41,7 @@ public class UpdateLockRowSemaphore extends DBSemaphore {
      * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      */
 
+    // update QRTZ_LOCKS set LOCK_NAME = LOCK_NAME where SCHED_NAME = QuartzScheduler and LOCK_NAME = ?
     public static final String UPDATE_FOR_LOCK = 
         "UPDATE " + TABLE_PREFIX_SUBST + TABLE_LOCKS + 
         " SET " + COL_LOCK_NAME + " = " + COL_LOCK_NAME +
@@ -48,6 +49,7 @@ public class UpdateLockRowSemaphore extends DBSemaphore {
         + " AND " + COL_LOCK_NAME + " = ? ";
 
 
+    // insert into QRTZ_LOCKS(SCHED_NAME, LOCK_NAME) values(QuartzScheduler, ?);
     public static final String INSERT_LOCK = "INSERT INTO "
         + TABLE_PREFIX_SUBST + TABLE_LOCKS + "(" + COL_SCHEDULER_NAME + ", " + COL_LOCK_NAME + ") VALUES (" 
         + SCHED_NAME_SUBST + ", ?)"; 
@@ -80,10 +82,10 @@ public class UpdateLockRowSemaphore extends DBSemaphore {
     @Override
     protected void executeSQL(Connection conn, final String lockName, final String expandedSQL, final String expandedInsertSQL) throws LockException {
         SQLException lastFailure = null;
-        for (int i = 0; i < RETRY_COUNT; i++) {
+        for (int i = 0; i < RETRY_COUNT; i++) { // 仅重试1次
             try {
-                if (!lockViaUpdate(conn, lockName, expandedSQL)) {
-                    lockViaInsert(conn, lockName, expandedInsertSQL);
+                if (!lockViaUpdate(conn, lockName, expandedSQL)) { // 通过更新锁定失败
+                    lockViaInsert(conn, lockName, expandedInsertSQL); // 通过插入锁定失败
                 }
                 return;
             } catch (SQLException e) {

@@ -20,6 +20,8 @@ import org.quartz.Matcher;
 import org.quartz.utils.Key;
 
 /**
+ *  非逻辑匹配器
+ *
  * Matches using an NOT operator on another Matcher. 
  *  
  * @author jhouse

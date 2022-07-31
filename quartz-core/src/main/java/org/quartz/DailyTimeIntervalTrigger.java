@@ -22,6 +22,8 @@ import java.util.Set;
 import org.quartz.DateBuilder.IntervalUnit;
 
 /**
+ * 基于每日重复的时间间隔触发器抽象
+ *
  * A <code>{@link Trigger}</code> that is used to fire a <code>{@link org.quartz.JobDetail}</code>
  * based upon daily repeating time intervals.
  * 

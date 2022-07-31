@@ -28,6 +28,9 @@ import org.quartz.Calendar;
 
 /**
  * <p>
+ * 年度日历（排除一年中一天或多天）
+ * 指定每年的哪一天。精度是【天】
+ *
  * This implementation of the Calendar excludes a set of days of the year. You
  * may use it to exclude bank holidays which are on the same date every year.
  * </p>

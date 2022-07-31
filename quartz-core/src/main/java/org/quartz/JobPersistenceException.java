@@ -19,6 +19,8 @@
 package org.quartz;
 
 /**
+ * 调度器的底层持久化机制异常
+ *
  * An exception that is thrown to indicate that there has been a failure in the
  * scheduler's underlying persistence mechanism.
  * 

@@ -24,13 +24,14 @@ import java.util.TimeZone;
 import org.quartz.Calendar;
 
 /**
- * <p>
+ * 仅实现每个日历所需的基本功能。(可用于日历之间的组合)
+ *
  * This implementation of the Calendar may be used (you don't have to) as a
  * base class for more sophisticated one's. It merely implements the base
  * functionality required by each Calendar.
  * </p>
  *
- * <p>
+ * <p>GregorianCalendar
  * Regarded as base functionality is the treatment of base calendars. Base
  * calendar allow you to chain (stack) as much calendars as you may need. For
  * example to exclude weekends you may use WeeklyCalendar. In order to exclude
@@ -48,11 +49,11 @@ public class BaseCalendar implements Calendar, Serializable, Cloneable {
     static final long serialVersionUID = 3106623404629760239L;
 
     // <p>A optional base calendar.</p>
-    private Calendar baseCalendar;
+    private Calendar baseCalendar; // 具体的实现类委托
 
-    private String description;
+    private String description; // 日历描述信息
 
-    private TimeZone timeZone;
+    private TimeZone timeZone; // 时区
 
     public BaseCalendar() {
     }
@@ -156,11 +157,9 @@ public class BaseCalendar implements Calendar, Serializable, Cloneable {
     }
 
     /**
-     * <p>
      * Check if date/time represented by timeStamp is included. If included
      * return true. The implementation of BaseCalendar simply calls the base
      * calendars isTimeIncluded() method if base calendar is set.
-     * </p>
      *
      * @see org.quartz.Calendar#isTimeIncluded(long)
      */
@@ -202,6 +201,8 @@ public class BaseCalendar implements Calendar, Serializable, Cloneable {
     }
 
     /**
+     * 构建一个包含指定时间的java原生日历
+     *
      * Build a <code>{@link java.util.Calendar}</code> for the given timeStamp.
      * The new Calendar will use the <code>BaseCalendar</code> time zone if it
      * is not <code>null</code>.
@@ -213,6 +214,8 @@ public class BaseCalendar implements Calendar, Serializable, Cloneable {
     }
 
     /**
+     * 构建一个java原生日历
+     *
      * Build a <code>{@link java.util.Calendar}</code> with the current time.
      * The new Calendar will use the <code>BaseCalendar</code> time zone if
      * it is not <code>null</code>.
@@ -225,6 +228,8 @@ public class BaseCalendar implements Calendar, Serializable, Cloneable {
     }
 
     /**
+     * 构建一个包含指定日期开始时间的java原生日历
+     *
      * Returns the start of the given day as a <code>{@link java.util.Calendar}</code>.
      * This calculation will take the <code>BaseCalendar</code>
      * time zone into account if it is not <code>null</code>.
@@ -244,6 +249,8 @@ public class BaseCalendar implements Calendar, Serializable, Cloneable {
     }
 
     /**
+     * 构建一个包含指定日期结束时间的java原生日历
+     *
      * Returns the end of the given day <code>{@link java.util.Calendar}</code>.
      * This calculation will take the <code>BaseCalendar</code>
      * time zone into account if it is not <code>null</code>.

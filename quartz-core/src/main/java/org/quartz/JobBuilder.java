@@ -21,6 +21,8 @@ import org.quartz.impl.JobDetailImpl;
 import org.quartz.utils.Key;
 
 /**
+ * JobDetail详情构建器
+ *
  * <code>JobBuilder</code> is used to instantiate {@link JobDetail}s.
  * 
  * <p>The builder will always try to keep itself in a valid state, with 

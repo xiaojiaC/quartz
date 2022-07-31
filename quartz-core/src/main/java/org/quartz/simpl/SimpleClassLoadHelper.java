@@ -25,6 +25,8 @@ import java.net.URL;
 import java.io.InputStream;
 
 /**
+ * Class.forName(String className) 加载className类用的ClassLoader
+ *
  * A <code>ClassLoadHelper</code> that simply calls <code>Class.forName(..)</code>.
  * 
  * @see org.quartz.spi.ClassLoadHelper

@@ -25,6 +25,8 @@ import java.util.Date;
 
 
 /**
+ * 触发器抽象
+ *
  * The base interface with properties common to all <code>Trigger</code>s -
  * use {@link TriggerBuilder} to instantiate an actual Trigger.
  * 
@@ -105,6 +107,8 @@ public interface Trigger extends Serializable, Cloneable, Comparable<Trigger> {
     public static final int MISFIRE_INSTRUCTION_SMART_POLICY = 0;
     
     /**
+     * 忽略MisFire策略。它会在资源合适的时候，重新触发所有的MisFire任务，并且不会影响现有的调度时间。
+     *
      * Instructs the <code>{@link Scheduler}</code> that the 
      * <code>Trigger</code> will never be evaluated for a misfire situation, 
      * and that the scheduler will simply try to fire it as soon as it can, 

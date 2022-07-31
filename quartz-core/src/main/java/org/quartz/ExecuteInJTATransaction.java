@@ -26,6 +26,8 @@ import java.lang.annotation.Target;
 import javax.transaction.UserTransaction;
 
 /**
+ * 指示job应在一个JTA事务执行
+ *
  * An annotation that marks a {@link Job} class as one that will have its 
  * execution wrapped by a JTA Transaction. 
  *   

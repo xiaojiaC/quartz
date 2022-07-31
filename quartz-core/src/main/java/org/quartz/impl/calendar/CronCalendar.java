@@ -8,6 +8,9 @@ import org.quartz.Calendar;
 import org.quartz.CronExpression;
 
 /**
+ * Cron日历（排除了由给定的CronExpression表达式的时间集合）
+ * 指定Cron表达式。精度取决于Cron表达式，也就是最大精度可以【到秒】
+ *
  * This implementation of the Calendar excludes the set of times expressed by a
  * given {@link org.quartz.CronExpression CronExpression}. For example, you 
  * could use this calendar to exclude all but business hours (8AM - 5PM) every 
@@ -119,16 +122,19 @@ public class CronCalendar extends BaseCalendar {
      *         the <CODE>CronCalendar</CODE>
      */
     @Override
-    public boolean isTimeIncluded(long timeInMillis) {        
+    public boolean isTimeIncluded(long timeInMillis) {
+        // 先检查基础日历不包含该时间（表示基础日历要排除它）
         if ((getBaseCalendar() != null) && 
                 (getBaseCalendar().isTimeIncluded(timeInMillis) == false)) {
             return false;
         }
-        
+        // 再检查该时间不满足cron表达式（表示Cron日历要排除它）
         return (!(cronExpression.isSatisfiedBy(new Date(timeInMillis))));
     }
 
     /**
+     * 如果自身已经不包含则先返回自身，否则返回下一个不包含的时间
+     *
      * Determines the next time included by the <CODE>CronCalendar</CODE>
      * after the specified time.
      * 

@@ -21,6 +21,8 @@ import org.quartz.JobPersistenceException;
 
 /**
  * <p>
+ * 获取或释放锁失败
+ *
  * Exception class for when there is a failure obtaining or releasing a
  * resource lock.
  * </p>

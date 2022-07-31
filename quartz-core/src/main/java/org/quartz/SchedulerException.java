@@ -21,6 +21,8 @@ package org.quartz;
 
 
 /**
+ * 基础的调度器异常
+ *
  * Base class for exceptions thrown by the Quartz <code>{@link Scheduler}</code>.
  * 
  * <p>

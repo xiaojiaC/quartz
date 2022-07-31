@@ -23,6 +23,12 @@ import java.util.TimeZone;
 import org.quartz.DateBuilder.IntervalUnit;
 
 /**
+ * 日历触发器抽象
+ *
+ * 触发器将按照触发器定义中指定的每 N 个（{@link #getRepeatInterval()} ）日历时间单位
+ * （{@link #getRepeatIntervalUnit()}）触发一次。可表达 SimpleTrigger无法表达的每月概念，
+ * CronTrigger无法表达“每5个月”不是12的偶数除数。
+ *
  * A concrete <code>{@link Trigger}</code> that is used to fire a <code>{@link org.quartz.JobDetail}</code>
  * based upon repeating calendar time intervals.
  * 

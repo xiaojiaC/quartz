@@ -20,6 +20,8 @@ import org.quartz.Matcher;
 import org.quartz.utils.Key;
 
 /**
+ *  或逻辑匹配器
+ *
  * Matches using an OR operator on two Matcher operands. 
  *  
  * @author jhouse

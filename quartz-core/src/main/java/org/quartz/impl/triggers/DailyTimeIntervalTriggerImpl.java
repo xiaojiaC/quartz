@@ -33,6 +33,8 @@ import org.quartz.Trigger;
 import org.quartz.DateBuilder.IntervalUnit;
 
 /**
+ * DailyTimeIntervalTrigger 的具体实现，用于根据每日重复时间间隔触发JobDetail。
+ *
  * A concrete implementation of DailyTimeIntervalTrigger that is used to fire a <code>{@link org.quartz.JobDetail}</code>
  * based upon daily repeating time intervals.
  * 

@@ -57,6 +57,8 @@ public class InitThreadContextClassLoadHelper implements ClassLoadHelper {
      */
 
     /**
+     * 调用是为了给 ClassLoadHelper 一个初始化自身的机会，包括从调用线程中“窃取”类加载器的机会，该线程是初始化 Quartz 的线程。
+     *
      * Called to give the ClassLoadHelper a chance to initialize itself,
      * including the opportunity to "steal" the class loader off of the calling
      * thread, which is the thread that is initializing Quartz.

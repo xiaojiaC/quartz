@@ -25,6 +25,8 @@ import org.quartz.TriggerListener;
 import org.quartz.Trigger.CompletedExecutionInstruction;
 
 /**
+ * 广播TriggerListener
+ *
  * Holds a List of references to TriggerListener instances and broadcasts all
  * events to them (in order).
  *

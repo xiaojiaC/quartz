@@ -4,6 +4,8 @@ import org.quartz.SchedulerException;
 import org.quartz.spi.InstanceIdGenerator;
 
 /**
+ * 系统配置实例id生成器（就是拿 org.quartz.scheduler.instanceId 系统配置做id，支持加前后缀）
+ *
  * InstanceIdGenerator that will use a {@link SystemPropertyInstanceIdGenerator#SYSTEM_PROPERTY system property}
  * to configure the scheduler.  The default system property name to use the value of {@link #SYSTEM_PROPERTY}, but
  * can be specified via the "systemPropertyName" property.

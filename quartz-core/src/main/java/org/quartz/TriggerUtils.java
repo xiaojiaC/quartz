@@ -25,6 +25,8 @@ import java.util.List;
 import org.quartz.spi.OperableTrigger;
 
 /**
+ * 触发器工具类，方便计算时间
+ *
  * Convenience and utility methods for working with <code>{@link Trigger}s</code>.
  * 
  * 

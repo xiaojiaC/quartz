@@ -93,7 +93,7 @@ public class JTAJobRunShellFactory implements JobRunShellFactory {
      */
     public JobRunShell createJobRunShell(TriggerFiredBundle bundle)
             throws SchedulerException {
-        return new JTAJobRunShell(scheduler, bundle);
+        return new JTAJobRunShell(scheduler, bundle); // 直接new个JTAJobRunShell
     }
 
 

@@ -21,6 +21,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
+ * 连接提供者
+ *
  * Implementations of this interface used by <code>DBConnectionManager</code>
  * to provide connections from various sources.
  * 

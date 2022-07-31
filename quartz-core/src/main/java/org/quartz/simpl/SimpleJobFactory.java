@@ -41,7 +41,8 @@ public class SimpleJobFactory implements JobFactory {
     protected Logger getLog() {
         return log;
     }
-    
+
+    // 就是拿到被触发的JobDetail的jobClass简单new下
     public Job newJob(TriggerFiredBundle bundle, Scheduler Scheduler) throws SchedulerException {
 
         JobDetail jobDetail = bundle.getJobDetail();

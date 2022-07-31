@@ -19,6 +19,9 @@
 package org.quartz;
 
 /**
+ * 日历抽象，日历不定义实际的触发时间，而是对时间的触发时间做一些限制，比如排除指定时间。
+ * 专门用于屏闭一个时间区间，使 Trigger 在这个区间中不被触发。
+ *
  * An interface to be implemented by objects that define spaces of time during 
  * which an associated <code>{@link Trigger}</code> may (not) fire. Calendars 
  * do not define actual fire times, but rather are used to limit a 
@@ -73,7 +76,8 @@ public interface Calendar extends java.io.Serializable, java.lang.Cloneable {
     Calendar getBaseCalendar();
 
     /**
-     * <p>
+     * <p>确定给定时间是否“包含”在日历中（以毫秒为单位）。
+     *
      * Determine whether the given time (in milliseconds) is 'included' by the
      * Calendar.
      * </p>
@@ -81,7 +85,8 @@ public interface Calendar extends java.io.Serializable, java.lang.Cloneable {
     boolean isTimeIncluded(long timeStamp);
 
     /**
-     * <p>
+     * <p>确定给定时间之后日历“包含”的下一个时间（以毫秒为单位）。
+     *
      * Determine the next time (in milliseconds) that is 'included' by the
      * Calendar after the given time.
      * </p>

@@ -22,6 +22,8 @@ import org.quartz.SchedulerException;
 import org.quartz.spi.InstanceIdGenerator;
 
 /**
+ * 简单的实例id生成器（就是拿 主机名+当前时间戳 做id）
+ *
  * The default InstanceIdGenerator used by Quartz when instance id is to be
  * automatically generated.  Instance id is of the form HOSTNAME + CURRENT_TIME.
  * 

@@ -21,6 +21,8 @@ import java.net.URL;
 import java.io.InputStream;
 
 /**
+ * 类加载器spi
+ *
  * An interface for classes wishing to provide the service of loading classes
  * and resources within the scheduler...
  * 

@@ -37,6 +37,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * <p>
+ * Cron触发器实现，用于依据cron表达式触发JobDetail
+ *
  * A concrete <code>{@link Trigger}</code> that is used to fire a <code>{@link org.quartz.JobDetail}</code>
  * at given moments in time, defined with Unix 'cron-like' definitions.
  * </p>
@@ -532,20 +534,20 @@ public class CronTriggerImpl extends AbstractTrigger<CronTrigger> implements Cro
             afterTime = new Date();
         }
 
-        if (getStartTime().after(afterTime)) {
-            afterTime = new Date(getStartTime().getTime() - 1000l);
+        if (getStartTime().after(afterTime)) { // 开始时间在当前时间之后
+            afterTime = new Date(getStartTime().getTime() - 1000l); // 则取开始时间前1s（再getTimeAfter计算其实就是开始时间）
         }
 
-        if (getEndTime() != null && (afterTime.compareTo(getEndTime()) >= 0)) {
+        if (getEndTime() != null && (afterTime.compareTo(getEndTime()) >= 0)) { // 开始时间在结束时间之后，则返回null
             return null;
         }
         
         Date pot = getTimeAfter(afterTime);
-        if (getEndTime() != null && pot != null && pot.after(getEndTime())) {
+        if (getEndTime() != null && pot != null && pot.after(getEndTime())) { // 下一次点火时间在结束时间后，则返回null
             return null;
         }
 
-        return pot;
+        return pot; // 下一个有效的点火时间
     }
 
     /**
@@ -610,22 +612,22 @@ public class CronTriggerImpl extends AbstractTrigger<CronTrigger> implements Cro
     public void updateAfterMisfire(org.quartz.Calendar cal) {
         int instr = getMisfireInstruction();
 
-        if(instr == Trigger.MISFIRE_INSTRUCTION_IGNORE_MISFIRE_POLICY)
+        if(instr == Trigger.MISFIRE_INSTRUCTION_IGNORE_MISFIRE_POLICY) // 忽略失火策略
             return;
 
-        if (instr == MISFIRE_INSTRUCTION_SMART_POLICY) {
+        if (instr == MISFIRE_INSTRUCTION_SMART_POLICY) { // 智能识别
             instr = MISFIRE_INSTRUCTION_FIRE_ONCE_NOW;
         }
 
-        if (instr == MISFIRE_INSTRUCTION_DO_NOTHING) {
+        if (instr == MISFIRE_INSTRUCTION_DO_NOTHING) { // 失火则什么也不做
             Date newFireTime = getFireTimeAfter(new Date());
             while (newFireTime != null && cal != null
                     && !cal.isTimeIncluded(newFireTime.getTime())) {
                 newFireTime = getFireTimeAfter(newFireTime);
             }
-            setNextFireTime(newFireTime);
-        } else if (instr == MISFIRE_INSTRUCTION_FIRE_ONCE_NOW) {
-            setNextFireTime(new Date());
+            setNextFireTime(newFireTime); // 更新下次点火时间为 下一个有效点火时间
+        } else if (instr == MISFIRE_INSTRUCTION_FIRE_ONCE_NOW) { // 失火则立即触发一次
+            setNextFireTime(new Date()); // 更新下次点火时间为 当前时间
         }
     }
 

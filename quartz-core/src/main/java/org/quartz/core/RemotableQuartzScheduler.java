@@ -40,6 +40,8 @@ import org.quartz.impl.matchers.GroupMatcher;
 import org.quartz.spi.OperableTrigger;
 
 /**
+ * 生命周期方法、自身属性方法、调度相关方法等
+ *
  * @author James House
  */
 public interface RemotableQuartzScheduler extends Remote {

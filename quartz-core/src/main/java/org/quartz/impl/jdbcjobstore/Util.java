@@ -124,7 +124,7 @@ public final class Util {
         }
     }
     
-    
+    // 反射填充bean对应属性值
     public static void setBeanProps(Object obj, String[] propNames, Object[] propValues)  throws JobPersistenceException {
         
         if(propNames == null || propNames.length == 0)

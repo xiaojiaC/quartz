@@ -19,6 +19,10 @@ package org.quartz;
 
 import org.quartz.spi.MutableTrigger;
 
+/**
+ * 调度构建器，可构建一个指示调度时间的可变触发器
+ * @param <T>
+ */
 public abstract class ScheduleBuilder<T extends Trigger>  {
     
     protected abstract MutableTrigger build();

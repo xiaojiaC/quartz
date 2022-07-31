@@ -22,6 +22,9 @@ import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 
 /**
+ *
+ * JobStore实例使用的接口，以便将信号传回QuartzScheduler。
+ *
  * An interface to be used by <code>JobStore</code> instances in order to
  * communicate signals back to the <code>QuartzScheduler</code>.
  * 

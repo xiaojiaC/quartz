@@ -19,6 +19,8 @@
 package org.quartz;
 
 /**
+ * 调度器监听器
+ *
  * The interface to be implemented by classes that want to be informed of major
  * <code>{@link Scheduler}</code> events.
  * 

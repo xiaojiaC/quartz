@@ -39,6 +39,8 @@ import org.quartz.spi.OperableTrigger;
 
 /**
  * <p>
+ * 抽象的触发器实现
+ *
  * The base abstract class to be extended by all <code>Trigger</code>s.
  * </p>
  * 
@@ -531,24 +533,24 @@ public abstract class AbstractTrigger<T extends Trigger> implements OperableTrig
      */
     public CompletedExecutionInstruction executionComplete(JobExecutionContext context,
                                           JobExecutionException result)
-    {
+    { // 获取执行完成下一步执行指令
         if (result != null && result.refireImmediately()) {
-            return CompletedExecutionInstruction.RE_EXECUTE_JOB;
+            return CompletedExecutionInstruction.RE_EXECUTE_JOB; // 重试
         }
     
         if (result != null && result.unscheduleFiringTrigger()) {
-            return CompletedExecutionInstruction.SET_TRIGGER_COMPLETE;
+            return CompletedExecutionInstruction.SET_TRIGGER_COMPLETE; // 取消当前触发器
         }
     
         if (result != null && result.unscheduleAllTriggers()) {
-            return CompletedExecutionInstruction.SET_ALL_JOB_TRIGGERS_COMPLETE;
+            return CompletedExecutionInstruction.SET_ALL_JOB_TRIGGERS_COMPLETE; // 取消该Job所有触发器
         }
     
         if (!mayFireAgain()) {
-            return CompletedExecutionInstruction.DELETE_TRIGGER;
+            return CompletedExecutionInstruction.DELETE_TRIGGER; // 不可再次点火，则直接删除
         }
     
-        return CompletedExecutionInstruction.NOOP;
+        return CompletedExecutionInstruction.NOOP; // 什么也不做
     }
     
     /**

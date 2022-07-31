@@ -19,6 +19,8 @@
 package org.quartz;
 
 /**
+ * 不可中断异常
+ *
  * An exception that is thrown to indicate that a call to 
  * InterruptableJob.interrupt() failed without interrupting the Job.
  * 

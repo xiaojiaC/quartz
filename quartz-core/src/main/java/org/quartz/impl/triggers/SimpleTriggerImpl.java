@@ -35,6 +35,8 @@ import org.quartz.TriggerUtils;
 
 /**
  * <p>
+ * 简单的触发器实现，用于依据给定的间隔和次数触发JobDetail
+ *
  * A concrete <code>{@link Trigger}</code> that is used to fire a <code>{@link org.quartz.JobDetail}</code>
  * at a given moment in time, and optionally repeated at a specified interval.
  * </p>
@@ -576,22 +578,22 @@ public class SimpleTriggerImpl extends AbstractTrigger<SimpleTrigger> implements
      */
     @Override
     public void triggered(Calendar calendar) {
-        timesTriggered++;
-        previousFireTime = nextFireTime;
-        nextFireTime = getFireTimeAfter(nextFireTime);
+        timesTriggered++; // 已触发次数+1
+        previousFireTime = nextFireTime; // 上一次点火时间
+        nextFireTime = getFireTimeAfter(nextFireTime); // 下一次点火时间
 
         while (nextFireTime != null && calendar != null
-                && !calendar.isTimeIncluded(nextFireTime.getTime())) {
+                && !calendar.isTimeIncluded(nextFireTime.getTime())) { // 下一次点火时间若不包含在日历中则排除，直到找到一个有效的
             
             nextFireTime = getFireTimeAfter(nextFireTime);
 
-            if(nextFireTime == null)
+            if(nextFireTime == null) // 找到最后都没发现有效的，则break
                 break;
             
             //avoid infinite loop
             java.util.Calendar c = java.util.Calendar.getInstance();
             c.setTime(nextFireTime);
-            if (c.get(java.util.Calendar.YEAR) > YEAR_TO_GIVEUP_SCHEDULING_AT) {
+            if (c.get(java.util.Calendar.YEAR) > YEAR_TO_GIVEUP_SCHEDULING_AT) { // 这里仅为了防止死循环
                 nextFireTime = null;
             }
         }

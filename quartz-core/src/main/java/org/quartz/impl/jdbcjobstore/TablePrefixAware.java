@@ -16,6 +16,8 @@
 package org.quartz.impl.jdbcjobstore;
 
 /**
+ * 织入表前缀和调度器名称
+ *
  * Interface for Quartz objects that need to know what the table prefix of
  * the tables used by a JDBC JobStore is.
  */

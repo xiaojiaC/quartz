@@ -8,6 +8,9 @@ import org.quartz.JobExecutionException;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 
+/**
+ * 可操作的触发器
+ */
 public interface OperableTrigger extends MutableTrigger {
 
     /**

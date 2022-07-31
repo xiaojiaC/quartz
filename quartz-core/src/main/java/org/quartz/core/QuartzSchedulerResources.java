@@ -67,13 +67,13 @@ public class QuartzSchedulerResources {
 
     private String rmiCreateRegistryStrategy = CREATE_REGISTRY_NEVER;
 
-    private ThreadPool threadPool;
+    private ThreadPool threadPool; // 线程池
 
-    private JobStore jobStore;
+    private JobStore jobStore; // job仓储
 
-    private JobRunShellFactory jobRunShellFactory;
+    private JobRunShellFactory jobRunShellFactory; // shell工厂
 
-    private List<SchedulerPlugin> schedulerPlugins = new ArrayList<SchedulerPlugin>(10);
+    private List<SchedulerPlugin> schedulerPlugins = new ArrayList<SchedulerPlugin>(10); // 插件列表
     
     private boolean makeSchedulerThreadDaemon = false;
 
@@ -87,7 +87,7 @@ public class QuartzSchedulerResources {
 
     private ManagementRESTServiceConfiguration managementRESTServiceConfiguration;
 
-    private ThreadExecutor threadExecutor;
+    private ThreadExecutor threadExecutor;// 线程池执行器
 
     private long batchTimeWindow = 0;
 

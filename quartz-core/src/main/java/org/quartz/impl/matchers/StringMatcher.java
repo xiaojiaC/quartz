@@ -20,6 +20,8 @@ import org.quartz.Matcher;
 import org.quartz.utils.Key;
 
 /**
+ * 抽象的字符串匹配器（相等、开头、结尾、包含、etc）
+ *
  * An abstract base class for some types of matchers.
  *  
  * @author jhouse

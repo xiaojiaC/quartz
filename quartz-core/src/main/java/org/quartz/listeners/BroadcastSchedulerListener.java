@@ -12,6 +12,8 @@ import org.quartz.Trigger;
 import org.quartz.TriggerKey;
 
 /**
+ * 广播SchedulerListener
+ *
  * Holds a List of references to SchedulerListener instances and broadcasts all
  * events to them (in order).
  *

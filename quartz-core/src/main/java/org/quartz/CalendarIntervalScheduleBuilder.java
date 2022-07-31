@@ -24,6 +24,8 @@ import org.quartz.impl.triggers.CalendarIntervalTriggerImpl;
 import org.quartz.spi.MutableTrigger;
 
 /**
+ * 日历触发调度构建器
+ *
  * <code>CalendarIntervalScheduleBuilder</code> is a {@link ScheduleBuilder} 
  * that defines calendar time (day, week, month, year) interval-based 
  * schedules for <code>Trigger</code>s.

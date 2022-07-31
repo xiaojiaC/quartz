@@ -21,6 +21,8 @@ import org.quartz.SchedulerConfigException;
 
 /**
  * <p>
+ * 执行实际业务job的线程池spi
+ *
  * The interface to be implemented by classes that want to provide a thread
  * pool for the <code>{@link org.quartz.core.QuartzScheduler}</code>'s use.
  * </p>

@@ -24,6 +24,8 @@ import org.quartz.JobKey;
 import org.quartz.SchedulerException;
 
 /**
+ * 保存给定作业完成后要触发的作业的映射集合。 如果此侦听器被通知完成具有映射的作业，则它将尝试触发后续作业。
+ *
  * Keeps a collection of mappings of which Job to trigger after the completion
  * of a given job.  If this listener is notified of a job completing that has a
  * mapping, then it will then attempt to trigger the follow-up job.  This

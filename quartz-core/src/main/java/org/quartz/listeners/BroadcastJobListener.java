@@ -24,6 +24,8 @@ import org.quartz.JobExecutionException;
 import org.quartz.JobListener;
 
 /**
+ * 保存对 JobListener 实例的引用列表，并将所有事件广播给它们（按顺序）。
+ *
  * Holds a List of references to JobListener instances and broadcasts all
  * events to them (in order).
  *

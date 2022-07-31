@@ -19,6 +19,8 @@ package org.quartz.impl.jdbcjobstore;
 import java.sql.Connection;
 
 /**
+ * 提供线程/资源锁定的接口，以保护资源不被多个线程同时更改。
+ *
  * An interface for providing thread/resource locking in order to protect
  * resources from being altered by multiple threads at the same time.
  * 

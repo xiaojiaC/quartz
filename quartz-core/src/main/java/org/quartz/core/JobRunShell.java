@@ -124,7 +124,7 @@ public class JobRunShell extends SchedulerListenerSupport implements Runnable {
         JobDetail jobDetail = firedTriggerBundle.getJobDetail();
 
         try {
-            job = sched.getJobFactory().newJob(firedTriggerBundle, scheduler);
+            job = sched.getJobFactory().newJob(firedTriggerBundle, scheduler);  // 依据jobDetail创建一个job实例
         } catch (SchedulerException se) {
             sched.notifySchedulerListenersError(
                     "An error occured instantiating job to be executed. job= '"
@@ -148,7 +148,7 @@ public class JobRunShell extends SchedulerListenerSupport implements Runnable {
     }
 
     public void run() {
-        qs.addInternalSchedulerListener(this);
+        qs.addInternalSchedulerListener(this); // 自身是一个调度器监听器，监听调度器关闭时间进行处理
 
         try {
             OperableTrigger trigger = (OperableTrigger) jec.getTrigger();
@@ -160,7 +160,7 @@ public class JobRunShell extends SchedulerListenerSupport implements Runnable {
                 Job job = jec.getJobInstance();
 
                 try {
-                    begin();
+                    begin(); // 开始执行钩子（JTA运行脚本在开始阶段会开启事务）
                 } catch (SchedulerException se) {
                     qs.notifySchedulerListenersError("Error executing Job ("
                             + jec.getJobDetail().getKey()
@@ -170,17 +170,17 @@ public class JobRunShell extends SchedulerListenerSupport implements Runnable {
 
                 // notify job & trigger listeners...
                 try {
-                    if (!notifyListenersBeginning(jec)) {
+                    if (!notifyListenersBeginning(jec)) { // 通知触发器被点火开始执行脚本了，如果未成功通知job监听器即将执行则忽略此次执行
                         break;
                     }
-                } catch(VetoedException ve) {
+                } catch(VetoedException ve) { // 被触发器监听器否决执行了
                     try {
                         CompletedExecutionInstruction instCode = trigger.executionComplete(jec, null);
-                        qs.notifyJobStoreJobVetoed(trigger, jobDetail, instCode);
+                        qs.notifyJobStoreJobVetoed(trigger, jobDetail, instCode); // 触发器被否决完成
                         
                         // QTZ-205
                         // Even if trigger got vetoed, we still needs to check to see if it's the trigger's finalized run or not.
-                        if (jec.getTrigger().getNextFireTime() == null) {
+                        if (jec.getTrigger().getNextFireTime() == null) { // 即使触发器被否决，我们仍然需要检查它是否是触发器的最终运行
                             qs.notifySchedulerListenersFinalized(jec.getTrigger());
                         }
 
@@ -199,7 +199,7 @@ public class JobRunShell extends SchedulerListenerSupport implements Runnable {
                 // execute the job
                 try {
                     log.debug("Calling execute on job " + jobDetail.getKey());
-                    job.execute(jec);
+                    job.execute(jec); // 开始执行自定义任务
                     endTime = System.currentTimeMillis();
                 } catch (JobExecutionException jee) {
                     endTime = System.currentTimeMillis();
@@ -212,7 +212,7 @@ public class JobRunShell extends SchedulerListenerSupport implements Runnable {
                             " threw an unhandled Exception: ", e);
                     SchedulerException se = new SchedulerException(
                             "Job threw an unhandled exception.", e);
-                    qs.notifySchedulerListenersError("Job ("
+                    qs.notifySchedulerListenersError("Job (" // 业务抛出的非JobExecutionException异常会触发通知调度器监听器发生错误
                             + jec.getJobDetail().getKey()
                             + " threw an exception.", se);
                     jobExEx = new JobExecutionException(se, false);
@@ -221,7 +221,7 @@ public class JobRunShell extends SchedulerListenerSupport implements Runnable {
                 jec.setJobRunTime(endTime - startTime);
 
                 // notify all job listeners
-                if (!notifyJobListenersComplete(jec, jobExEx)) {
+                if (!notifyJobListenersComplete(jec, jobExEx)) { // 通知job监听器job执行完成，如果没通知成功则不算完成
                     break;
                 }
 
@@ -229,7 +229,7 @@ public class JobRunShell extends SchedulerListenerSupport implements Runnable {
 
                 // update the trigger
                 try {
-                    instCode = trigger.executionComplete(jec, jobExEx);
+                    instCode = trigger.executionComplete(jec, jobExEx); // 触发器执行完成，依据执行异常指示下一步动作
                 } catch (Exception e) {
                     // If this happens, there's a bug in the trigger...
                     SchedulerException se = new SchedulerException(
@@ -240,13 +240,13 @@ public class JobRunShell extends SchedulerListenerSupport implements Runnable {
                 }
 
                 // notify all trigger listeners
-                if (!notifyTriggerListenersComplete(jec, instCode)) {
+                if (!notifyTriggerListenersComplete(jec, instCode)) { // 通知触发器监听器执行完成，如果没通知成功则不算完成
                     break;
                 }
 
                 // update job/trigger or re-execute job
-                if (instCode == CompletedExecutionInstruction.RE_EXECUTE_JOB) {
-                    jec.incrementRefireCount();
+                if (instCode == CompletedExecutionInstruction.RE_EXECUTE_JOB) { // 立即重试
+                    jec.incrementRefireCount(); // 增加重试次数
                     try {
                         complete(false);
                     } catch (SchedulerException se) {
@@ -258,7 +258,7 @@ public class JobRunShell extends SchedulerListenerSupport implements Runnable {
                 }
 
                 try {
-                    complete(true);
+                    complete(true); // 完成执行钩子（JTA运行脚本在完成阶段会提交/回滚事务）
                 } catch (SchedulerException se) {
                     qs.notifySchedulerListenersError("Error executing Job ("
                             + jec.getJobDetail().getKey()
@@ -266,7 +266,7 @@ public class JobRunShell extends SchedulerListenerSupport implements Runnable {
                     continue;
                 }
 
-                qs.notifyJobStoreJobComplete(trigger, jobDetail, instCode);
+                qs.notifyJobStoreJobComplete(trigger, jobDetail, instCode); // 触发器执行完成
                 break;
             } while (true);
 
@@ -304,7 +304,7 @@ public class JobRunShell extends SchedulerListenerSupport implements Runnable {
             return false;
         }
 
-        if(vetoed) {
+        if(vetoed) { // 是否决执行
             try {
                 qs.notifyJobListenersWasVetoed(jobExCtxt);
             } catch (SchedulerException se) {

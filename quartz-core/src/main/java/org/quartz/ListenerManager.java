@@ -20,6 +20,8 @@ package org.quartz;
 import java.util.List;
 
 /**
+ * 所有监听器的管理器抽象
+ *
  * Client programs may be interested in the 'listener' interfaces that are
  * available from Quartz. The <code>{@link JobListener}</code> interface
  * provides notifications of <code>Job</code> executions. The 

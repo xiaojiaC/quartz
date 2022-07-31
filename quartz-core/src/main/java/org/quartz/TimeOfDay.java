@@ -22,6 +22,9 @@ import java.util.Date;
 import java.util.TimeZone;
 
 /**
+ * 一天的某个时间
+ * 用于 DailyTimeIntervalScheduleBuilder#startingDailyAt | endingDailyAt
+ *
  * Represents a time in hour, minute and second of any given day.
  * 
  * <p>The hour is in 24-hour convention, meaning values are from 0 to 23.</p> 

@@ -18,7 +18,8 @@ package org.quartz.utils;
 import java.io.Serializable;
 
 /**
- * <p>
+ * <p>String键脏值Map，用于JobDataMap和SchedulerContext
+ *
  * An implementation of <code>Map</code> that wraps another <code>Map</code>
  * and flags itself 'dirty' when it is modified, enforces that all keys are
  * Strings. 

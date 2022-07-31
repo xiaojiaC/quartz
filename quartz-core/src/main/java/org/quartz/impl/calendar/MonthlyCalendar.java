@@ -23,7 +23,10 @@ import java.util.TimeZone;
 import org.quartz.Calendar;
 
 /**
- * <p>
+ * <p>月份日历（排除月份中的指定数天）
+ *
+ * 指定每月的几号。可选值为1-31。精度是【天】
+ *
  * This implementation of the Calendar excludes a set of days of the month. You
  * may use it to exclude every first day of each month for example. But you may define
  * any day of a month.

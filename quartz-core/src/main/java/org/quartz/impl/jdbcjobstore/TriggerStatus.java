@@ -24,7 +24,8 @@ import org.quartz.TriggerKey;
 
 
 /**
- * <p>
+ * <p>触发器状态
+ *
  * Object representing a job or trigger key.
  * </p>
  * 

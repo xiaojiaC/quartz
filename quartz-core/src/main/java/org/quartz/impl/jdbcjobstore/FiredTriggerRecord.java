@@ -22,6 +22,8 @@ import org.quartz.TriggerKey;
 
 /**
  * <p>
+ * 已点火的触发记录
+ *
  * Conveys the state of a fired-trigger record.
  * </p>
  * 
@@ -51,9 +53,9 @@ public class FiredTriggerRecord implements java.io.Serializable {
 
     private String fireInstanceState;
 
-    private JobKey jobKey;
+    private JobKey jobKey; // job键
 
-    private boolean jobDisallowsConcurrentExecution;
+    private boolean jobDisallowsConcurrentExecution; // job是否允许并发执行
 
     private boolean jobRequestsRecovery;
 

@@ -89,7 +89,7 @@ public class SimpleSemaphore implements Semaphore {
                     "Lock '" + lockName + "' is being obtained: "
                             + Thread.currentThread().getName());
             }
-            while (locks.contains(lockName)) {
+            while (locks.contains(lockName)) { // 锁已经被别人占有，则等待别人释放
                 try {
                     this.wait();
                 } catch (InterruptedException ie) {
@@ -106,7 +106,7 @@ public class SimpleSemaphore implements Semaphore {
                     "Lock '" + lockName + "' given to: "
                             + Thread.currentThread().getName());
             }
-            getThreadLocks().add(lockName);
+            getThreadLocks().add(lockName); // 拿到锁则维护信息
             locks.add(lockName);
         } else if(log.isDebugEnabled()) {
             log.debug(

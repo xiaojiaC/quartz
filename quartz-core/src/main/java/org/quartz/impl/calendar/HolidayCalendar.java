@@ -27,7 +27,10 @@ import java.util.TreeSet;
 import org.quartz.Calendar;
 
 /**
- * <p>
+ * <p>节假日日历（排除节假日）
+ *
+ * 指定特定的日期，比如2014-06-13。精度到【天】
+ *
  * This implementation of the Calendar stores a list of holidays (full days
  * that are excluded from scheduling).
  * </p>

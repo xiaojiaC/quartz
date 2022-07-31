@@ -21,6 +21,8 @@ import org.quartz.TriggerKey;
 import org.quartz.utils.Key;
 
 /**
+ * 名字匹配器（忽略匹配组）
+ *
  * Matches on name (ignores group) property of Keys.
  *  
  * @author jhouse

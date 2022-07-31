@@ -60,20 +60,21 @@ import org.quartz.spi.TriggerFiredBundle;
  * @author jhouse
  */
 public class PropertySettingJobFactory extends SimpleJobFactory {
-    private boolean warnIfNotFound = false;
-    private boolean throwIfNotFound = false;
+    private boolean warnIfNotFound = false; // 属性设置不成功时打告警日志
+    private boolean throwIfNotFound = false; // 属性设置不成功时抛异常
     
     @Override
     public Job newJob(TriggerFiredBundle bundle, Scheduler scheduler) throws SchedulerException {
 
         Job job = super.newJob(bundle, scheduler);
-        
-        JobDataMap jobDataMap = new JobDataMap();
-        jobDataMap.putAll(scheduler.getContext());
-        jobDataMap.putAll(bundle.getJobDetail().getJobDataMap());
-        jobDataMap.putAll(bundle.getTrigger().getJobDataMap());
 
-        setBeanProps(job, jobDataMap);
+        // 设置job的jobDataMap属性
+        JobDataMap jobDataMap = new JobDataMap();
+        jobDataMap.putAll(scheduler.getContext()); // 先是塞调度器上下文中的配置
+        jobDataMap.putAll(bundle.getJobDetail().getJobDataMap()); // 再塞jobDetail中的jobDataMap设置
+        jobDataMap.putAll(bundle.getTrigger().getJobDataMap()); // 最后塞触发器中的jobDataMap设置
+
+        setBeanProps(job, jobDataMap); // 反射填充值
         
         return job;
     }

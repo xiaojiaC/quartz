@@ -21,6 +21,8 @@ import org.quartz.impl.triggers.SimpleTriggerImpl;
 import org.quartz.spi.MutableTrigger;
 
 /**
+ * 简单的调度构建器实现
+ *
  * <code>SimpleScheduleBuilder</code> is a {@link ScheduleBuilder} 
  * that defines strict/literal interval-based schedules for 
  * <code>Trigger</code>s.

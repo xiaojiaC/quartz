@@ -20,7 +20,8 @@ package org.quartz.utils;
 import javax.sql.DataSource;
 
 /**
- * <p>
+ * <p>池化连接提供者
+ *
  * <code>ConnectionProvider</code>s supporting pooling of connections.
  * </p>
  *

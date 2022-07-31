@@ -21,6 +21,8 @@ package org.quartz;
 import java.util.Collection;
 
 /**
+ * 调度器构建工厂
+ *
  * Provides a mechanism for obtaining client-usable handles to <code>Scheduler</code>
  * instances.
  * 

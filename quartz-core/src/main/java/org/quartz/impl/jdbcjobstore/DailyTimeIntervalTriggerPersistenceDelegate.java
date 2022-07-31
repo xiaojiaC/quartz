@@ -100,6 +100,7 @@ public class DailyTimeIntervalTriggerPersistenceDelegate extends SimplePropertie
 
     @Override
     protected TriggerPropertyBundle getTriggerPropertyBundle(SimplePropertiesTriggerProperties props) {
+        // 看这对应关系，光看表怎么猜得到
         int repeatCount = (int)props.getLong1();
         int interval = props.getInt1();
         String intervalUnitStr = props.getString1();

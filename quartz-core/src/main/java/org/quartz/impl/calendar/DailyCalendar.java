@@ -7,6 +7,13 @@ import java.util.StringTokenizer;
 import java.util.TimeZone;
 
 /**
+ * 日期日历（排除每天某些时间）每个DailyCalendar仅允许指定单个时间范围，并且该时间范围可能不会跨越每日边界
+ * （即，您不能指定从上午8点至凌晨5点的时间范围）。 如果属性invertTimeRange为false（默认），
+ * 则时间范围定义触发器不允许触发的时间范围。 如果invertTimeRange为true，则时间范围被反转
+ * - 也就是排除在定义的时间范围之外的所有时间。
+ *
+ * 指定每天的时间段（rangeStartingTime,rangeEndingTime)，格式是HH:MM[:SS[:mmm]]。也就是最大精度可以【到毫秒】
+ *
  * This implementation of the Calendar excludes (or includes - see below) a 
  * specified time range each day. For example, you could use this calendar to 
  * exclude business hours (8AM - 5PM) every day. Each <CODE>DailyCalendar</CODE>

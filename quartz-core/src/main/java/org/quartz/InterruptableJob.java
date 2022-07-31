@@ -19,6 +19,8 @@
 package org.quartz;
 
 /**
+ * 可中断的Job
+ *
  * The interface to be implemented by <code>{@link Job}s</code> that provide a 
  * mechanism for having their execution interrupted.  It is NOT a requirement
  * for jobs to implement this interface - in fact, for most people, none of

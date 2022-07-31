@@ -27,6 +27,8 @@ import org.quartz.impl.triggers.DailyTimeIntervalTriggerImpl;
 import org.quartz.spi.MutableTrigger;
 
 /**
+ * 每日重复的时间间隔触发构建器实现
+ *
  * A {@link ScheduleBuilder} implementation that build schedule for DailyTimeIntervalTrigger.
  * 
  * <p>This builder provide an extra convenient method for you to set the trigger's endTimeOfDay. You may

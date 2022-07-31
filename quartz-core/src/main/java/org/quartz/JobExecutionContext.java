@@ -20,6 +20,8 @@ package org.quartz;
 import java.util.Date;
 
 /**
+ * Job执行上下文
+ *
  * A context bundle containing handles to various environment information, that
  * is given to a <code>{@link org.quartz.JobDetail}</code> instance as it is
  * executed, and to a <code>{@link Trigger}</code> instance after the

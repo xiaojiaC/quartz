@@ -24,6 +24,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * Job执行完后持久化JobDataMap数据
+ *
  * An annotation that marks a {@link Job} class as one that makes updates to its
  * {@link JobDataMap} during execution, and wishes the scheduler to re-store the
  * <code>JobDataMap</code> when execution completes. 

@@ -25,6 +25,8 @@ import org.quartz.SchedulerException;
 
 /**
  * <p>
+ *     调度器仓库单例（存放调度器名称及实例的映射）
+ *
  * Holds references to Scheduler instances - ensuring uniqueness, and
  * preventing garbage collection, and allowing 'global' lookups - all within a
  * ClassLoader space.

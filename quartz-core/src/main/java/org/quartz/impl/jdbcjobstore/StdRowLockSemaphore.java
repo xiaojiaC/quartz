@@ -23,6 +23,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
+ * 基于数据库行锁实现的信号量
+ *
  * Internal database based lock handler for providing thread/resource locking 
  * in order to protect resources from being altered by multiple threads at the 
  * same time.
@@ -39,10 +41,15 @@ public class StdRowLockSemaphore extends DBSemaphore {
      * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      */
 
+    // select * from QRTZ_LOCKS where SCHED_NAME = QuartzScheduler and LOCK_NAME = ? for update
+    // for update: 在读取行上（有索引）设置一个排他锁，防止其他session读取或者写入行数据
     public static final String SELECT_FOR_LOCK = "SELECT * FROM "
             + TABLE_PREFIX_SUBST + TABLE_LOCKS + " WHERE " + COL_SCHEDULER_NAME + " = " + SCHED_NAME_SUBST
             + " AND " + COL_LOCK_NAME + " = ? FOR UPDATE";
 
+    // insert into QRTZ_LOCKS(SCHED_NAME, LOCK_NAME) values(QuartzScheduler, ?);
+    // insert: 对应的索引记录上加一个排它锁（record lock），不会阻塞其他session在gap间隙里插入记录，
+    // 在insert操作之前，还会加一种插入意向间隙锁，只要插入的记录不是gap间隙中的相同位置，则无需等待其他session就可完成
     public static final String INSERT_LOCK = "INSERT INTO "
         + TABLE_PREFIX_SUBST + TABLE_LOCKS + "(" + COL_SCHEDULER_NAME + ", " + COL_LOCK_NAME + ") VALUES (" 
         + SCHED_NAME_SUBST + ", ?)"; 
@@ -66,8 +73,8 @@ public class StdRowLockSemaphore extends DBSemaphore {
     // Data Members
 
     // Configurable lock retry parameters
-    private int maxRetry = 3;
-    private long retryPeriod = 1000L;
+    private int maxRetry = 3; // 最大重试次数
+    private long retryPeriod = 1000L; // 重试间隔
 
     public void setMaxRetry(int maxRetry) {
         this.maxRetry = maxRetry;
@@ -121,7 +128,7 @@ public class StdRowLockSemaphore extends DBSemaphore {
                         Thread.currentThread().getName());
                 }
                 rs = ps.executeQuery();
-                if (!rs.next()) {
+                if (!rs.next()) { // 先查后插（查不成功则插入）
                     getLog().debug(
                             "Inserting new lock row for lock: '" + lockName + "' being obtained by thread: " + 
                             Thread.currentThread().getName());
@@ -134,8 +141,8 @@ public class StdRowLockSemaphore extends DBSemaphore {
     
                     int res = ps.executeUpdate();
                     
-                    if(res != 1) {
-                        if(count < maxRetryLocal) {
+                    if(res != 1) { // 插入失败
+                        if(count < maxRetryLocal) { // 前maxRetry-1次重试，需要休眠一会继续试
                             // pause a bit to give another thread some time to commit the insert of the new lock row
                             try {
                                 Thread.sleep(retryPeriodLocal);
@@ -145,7 +152,8 @@ public class StdRowLockSemaphore extends DBSemaphore {
                             // try again ...
                             continue;
                         }
-                    
+
+                        // 已达到则抛异常
                         throw new SQLException(Util.rtp(
                             "No row exists, and one could not be inserted in table " + TABLE_PREFIX_SUBST + TABLE_LOCKS + 
                             " for lock named: " + lockName, getTablePrefix(), getSchedulerNameLiteral()));

@@ -23,6 +23,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * DB信号量，基于数据库实现信号量
+ *
  * Base class for database based lock handlers for providing thread/resource locking 
  * in order to protect resources from being altered by multiple threads at the 
  * same time.
@@ -40,17 +42,17 @@ public abstract class DBSemaphore implements Semaphore, Constants,
      * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      */
 
-    ThreadLocal<HashSet<String>> lockOwners = new ThreadLocal<HashSet<String>>();
+    ThreadLocal<HashSet<String>> lockOwners = new ThreadLocal<HashSet<String>>(); // 锁持有者
 
-    private String sql;
-    private String insertSql;
+    private String sql; // 原始查询模板sql
+    private String insertSql; // 原始插入模板sql
 
-    private String tablePrefix;
+    private String tablePrefix; // 表前缀
     
-    private String schedName;
+    private String schedName; // 调度器名称
 
-    private String expandedSQL;
-    private String expandedInsertSQL;
+    private String expandedSQL; // 查询sql（填充了表前缀和调度器名称）
+    private String expandedInsertSQL; // 模板sql
 
     /*
      * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -108,19 +110,19 @@ public abstract class DBSemaphore implements Semaphore, Constants,
                 "Lock '" + lockName + "' is desired by: "
                         + Thread.currentThread().getName());
         }
-        if (!isLockOwner(lockName)) {
+        if (!isLockOwner(lockName)) { // 未持有则尝试获取数据库锁
 
-            executeSQL(conn, lockName, expandedSQL, expandedInsertSQL);
+            executeSQL(conn, lockName, expandedSQL, expandedInsertSQL); // 获取锁
             
             if(log.isDebugEnabled()) {
                 log.debug(
                     "Lock '" + lockName + "' given to: "
                             + Thread.currentThread().getName());
             }
-            getThreadLocks().add(lockName);
+            getThreadLocks().add(lockName); // 成功则记录持有，失败直接抛异常了到不了这行
             //getThreadLocksObtainer().put(lockName, new
             // Exception("Obtainer..."));
-        } else if(log.isDebugEnabled()) {
+        } else if(log.isDebugEnabled()) { // 已持有（类似重入）
             log.debug(
                 "Lock '" + lockName + "' Is already owned by: "
                         + Thread.currentThread().getName());
@@ -136,15 +138,15 @@ public abstract class DBSemaphore implements Semaphore, Constants,
      */
     public void releaseLock(String lockName) {
 
-        if (isLockOwner(lockName)) {
+        if (isLockOwner(lockName)) { // 是持有则可释放
             if(getLog().isDebugEnabled()) {
                 getLog().debug(
                     "Lock '" + lockName + "' returned by: "
                             + Thread.currentThread().getName());
             }
-            getThreadLocks().remove(lockName);
+            getThreadLocks().remove(lockName); // 移除锁记录，数据库锁commit结束自动释放了
             //getThreadLocksObtainer().remove(lockName);
-        } else if (getLog().isDebugEnabled()) {
+        } else if (getLog().isDebugEnabled()) { // 未持有则抛异常
             getLog().warn(
                 "Lock '" + lockName + "' attempt to return by: "
                         + Thread.currentThread().getName()
@@ -158,6 +160,7 @@ public abstract class DBSemaphore implements Semaphore, Constants,
      * resource.
      */
     public boolean isLockOwner(String lockName) {
+        // 检查锁是否被当前线程持有
         return getThreadLocks().contains(lockName);
     }
 

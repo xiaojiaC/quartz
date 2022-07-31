@@ -22,7 +22,8 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 /**
- * <p>
+ * 单例<p>连接管理器用于依据数据源名获取连接
+ *
  * Manages a collection of ConnectionProviders, and provides transparent access
  * to their connections.
  * </p>

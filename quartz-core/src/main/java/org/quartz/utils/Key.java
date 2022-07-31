@@ -22,7 +22,8 @@ import java.util.UUID;
 
 
 /**
- * <p>
+ * <p>唯一键抽象，用于JobKey和TriggerKey
+ *
  * Object representing a job or trigger key.
  * </p>
  * 

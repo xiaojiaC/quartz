@@ -70,6 +70,6 @@ public class StdJobRunShellFactory implements JobRunShellFactory {
      * </p>
      */
     public JobRunShell createJobRunShell(TriggerFiredBundle bndle) throws SchedulerException {
-        return new JobRunShell(scheduler, bndle);
+        return new JobRunShell(scheduler, bndle); // 构建JobRunShell
     }
 }

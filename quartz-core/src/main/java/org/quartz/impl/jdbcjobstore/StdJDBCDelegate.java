@@ -150,7 +150,7 @@ public class StdJDBCDelegate implements DriverDelegate, StdJDBCConstants {
             if(parts.length == 1 || parts[1] == null || parts[1].equals(""))
                 continue;
 
-            if(name.equals("triggerPersistenceDelegateClasses")) {
+            if(name.equals("triggerPersistenceDelegateClasses")) { // 自定义触发器持久化委托器
                 
                 String[] trigDelegates = parts[1].split(",");
                 
@@ -208,7 +208,8 @@ public class StdJDBCDelegate implements DriverDelegate, StdJDBCConstants {
     //---------------------------------------------------------------------------
 
     /**
-     * <p>
+     * <p>更新触发器状态（把在oldState1/oldState2状态的触发器状态更新为newState）
+     *
      * Insert the job detail record.
      * </p>
      * 
@@ -240,7 +241,8 @@ public class StdJDBCDelegate implements DriverDelegate, StdJDBCConstants {
     }
 
     /**
-     * <p>
+     * <p>获取下次点火时间小于ts的所有失火触发器key
+     *
      * Get the names of all of the triggers that have misfired.
      * </p>
      * 
@@ -273,7 +275,8 @@ public class StdJDBCDelegate implements DriverDelegate, StdJDBCConstants {
     }
 
     /**
-     * <p>
+     * <p>查询特定状态下的所有触发器key
+     *
      * Select all of the triggers in a given state.
      * </p>
      * 
@@ -366,7 +369,7 @@ public class StdJDBCDelegate implements DriverDelegate, StdJDBCConstants {
                 }
             }
             
-            return hasReachedLimit;
+            return hasReachedLimit; // 达到限制说明还有失火的
         } finally {
             closeResultSet(rs);
             closeStatement(ps);
@@ -1095,7 +1098,7 @@ public class StdJDBCDelegate implements DriverDelegate, StdJDBCConstants {
             if(tDel == null)
                 insertBlobTrigger(conn, trigger);
             else
-                tDel.insertExtendedTriggerProperties(conn, trigger, state, jobDetail);
+                tDel.insertExtendedTriggerProperties(conn, trigger, state, jobDetail); // 插入触发器相关的扩展属性
             
         } finally {
             closeStatement(ps);
@@ -1170,7 +1173,7 @@ public class StdJDBCDelegate implements DriverDelegate, StdJDBCConstants {
 
 
         try {
-            if(updateJobData) {
+            if(updateJobData) { // 更新jobData
                 ps = conn.prepareStatement(rtp(UPDATE_TRIGGER));
             } else {
                 ps = conn.prepareStatement(rtp(UPDATE_TRIGGER_SKIP_DATA));
@@ -1809,7 +1812,7 @@ public class StdJDBCDelegate implements DriverDelegate, StdJDBCConstants {
                     }
                 }
                 else {
-                    TriggerPersistenceDelegate tDel = findTriggerPersistenceDelegate(triggerType);
+                    TriggerPersistenceDelegate tDel = findTriggerPersistenceDelegate(triggerType); // 依据触发器类型构建触发器
                     
                     if(tDel == null)
                         throw new JobPersistenceException("No TriggerPersistenceDelegate for trigger discriminator type: " + triggerType);
@@ -1846,7 +1849,7 @@ public class StdJDBCDelegate implements DriverDelegate, StdJDBCConstants {
                     trigger.setNextFireTime(nft);
                     trigger.setPreviousFireTime(pft);
                     
-                    setTriggerStateProperties(trigger, triggerProps);
+                    setTriggerStateProperties(trigger, triggerProps); // 填充触发器状态属性
                 }                
             }
 
@@ -2690,8 +2693,8 @@ public class StdJDBCDelegate implements DriverDelegate, StdJDBCConstants {
             
             ps.setString(1, instanceId);
 
-            ps.setBigDecimal(2, new BigDecimal(String.valueOf(System.currentTimeMillis())));
-            ps.setBigDecimal(3, new BigDecimal(String.valueOf(trigger.getNextFireTime().getTime())));
+            ps.setBigDecimal(2, new BigDecimal(String.valueOf(System.currentTimeMillis()))); // 当前点火时间
+            ps.setBigDecimal(3, new BigDecimal(String.valueOf(trigger.getNextFireTime().getTime()))); // 下一次点火时间
             ps.setString(4, state);
 
             if (job != null) {

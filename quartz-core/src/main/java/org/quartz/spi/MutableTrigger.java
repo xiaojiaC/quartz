@@ -28,6 +28,9 @@ import org.quartz.Trigger;
 import org.quartz.TriggerKey;
 import org.quartz.TriggerUtils;
 
+/**
+ * 可变触发器抽象（其实就是把set方法拎到这个接口）
+ */
 public interface MutableTrigger extends Trigger {
 
     public void setKey(TriggerKey key);

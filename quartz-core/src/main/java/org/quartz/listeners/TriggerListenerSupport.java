@@ -23,6 +23,8 @@ import org.quartz.JobExecutionContext;
 import org.quartz.Trigger.CompletedExecutionInstruction;
 
 /**
+ * TriggerListener适配器
+ *
  * A helpful abstract base class for implementors of 
  * <code>{@link org.quartz.TriggerListener}</code>.
  * 

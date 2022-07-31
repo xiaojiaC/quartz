@@ -32,7 +32,7 @@ import org.quartz.TriggerKey;
 import org.quartz.spi.OperableTrigger;
 import org.quartz.spi.TriggerFiredBundle;
 
-
+// job执行上下文简单实现
 public class JobExecutionContextImpl implements java.io.Serializable, JobExecutionContext {
 
     private static final long serialVersionUID = -8139417614523942021L;

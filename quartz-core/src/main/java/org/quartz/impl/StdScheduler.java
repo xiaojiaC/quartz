@@ -42,6 +42,8 @@ import org.quartz.spi.JobFactory;
 
 /**
  * <p>
+ * StdScheduler内部方法的调用其实就是委托给QuartzScheduler
+ *
  * An implementation of the <code>Scheduler</code> interface that directly
  * proxies all method calls to the equivalent call on a given <code>QuartzScheduler</code>
  * instance.

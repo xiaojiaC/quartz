@@ -24,6 +24,8 @@ import org.slf4j.LoggerFactory;
 import org.quartz.SchedulerException;
 
 /**
+ * 调度器详情设置器（其实就是反射设置其实例名和实例id）
+ *
  * This utility calls methods reflectively on the given objects even though the
  * methods are likely on a proper interface (ThreadPool, JobStore, etc). The
  * motivation is to be tolerant of older implementations that have not been

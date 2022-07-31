@@ -38,7 +38,8 @@ import org.quartz.utils.Key;
 import org.slf4j.Logger;
 
 /**
- * <p>
+ * <p>驱动委托基类，跟JobStore每个方法很像，只是多了个连接参数
+ *
  * This is the base interface for all driver delegate classes.
  * </p>
  * 

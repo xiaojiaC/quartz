@@ -18,6 +18,8 @@
 package org.quartz;
 
 /**
+ * Job执行过程中异常，设置对应的标识可指示异常后处理逻辑
+ *
  * An exception that can be thrown by a <code>{@link org.quartz.Job}</code>
  * to indicate to the Quartz <code>{@link Scheduler}</code> that an error
  * occurred while executing, and whether or not the <code>Job</code> requests

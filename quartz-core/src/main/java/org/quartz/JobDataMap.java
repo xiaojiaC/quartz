@@ -24,6 +24,8 @@ import java.util.Map;
 import org.quartz.utils.StringKeyDirtyFlagMap;
 
 /**
+ * Job实例的自定义状态信息持有Map
+ *
  * Holds state information for <code>Job</code> instances.
  * 
  * <p>

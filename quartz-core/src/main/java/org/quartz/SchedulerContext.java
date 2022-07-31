@@ -24,6 +24,8 @@ import java.util.Map;
 import org.quartz.utils.StringKeyDirtyFlagMap;
 
 /**
+ * 调取器上下文（其可维护配置文件中配置的调度器配置）
+ *
  * Holds context/environment data that can be made available to Jobs as they
  * are executed. This feature is much like the ServletContext feature when
  * working with J2EE servlets.

@@ -22,6 +22,8 @@ import org.quartz.SchedulerException;
 
 /**
  * <p>
+ * Job工厂（可依据触发器和调度器新建job）
+ *
  * A JobFactory is responsible for producing instances of <code>Job</code>
  * classes.
  * </p>

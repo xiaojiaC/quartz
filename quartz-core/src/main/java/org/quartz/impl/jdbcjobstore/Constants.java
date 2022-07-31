@@ -18,7 +18,8 @@
 package org.quartz.impl.jdbcjobstore;
 
 /**
- * <p>
+ * <p>一堆表相关的字段常量
+ *
  * This interface can be implemented by any <code>{@link
  * org.quartz.impl.jdbcjobstore.DriverDelegate}</code>
  * class that needs to use the constants contained herein.

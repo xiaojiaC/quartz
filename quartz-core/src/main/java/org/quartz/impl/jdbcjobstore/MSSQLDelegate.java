@@ -28,6 +28,8 @@ import org.slf4j.Logger;
 
 /**
  * <p>
+ * Mysql驱动委托
+ *
  * This is a driver delegate for the MSSQL JDBC driver.
  * </p>
  * 
@@ -80,11 +82,11 @@ public class MSSQLDelegate extends StdJDBCDelegate {
     @Override           
     protected Object getJobDataFromBlob(ResultSet rs, String colName)
         throws ClassNotFoundException, IOException, SQLException {
-        if (canUseProperties()) {
+        if (canUseProperties()) { // 如果使用useProperties直接返回
             InputStream binaryInput = rs.getBinaryStream(colName);
             return binaryInput;
         }
-        return getObjectFromBlob(rs, colName);
+        return getObjectFromBlob(rs, colName); // 使用java对象流转换一下
     }
 }
 

@@ -23,7 +23,8 @@ import org.quartz.Calendar;
 import org.quartz.JobDetail;
 
 /**
- * <p>
+ * <p>用于将执行时数据从 JobStore 返回到 QuartzSchedulerThread
+ *
  * A simple class (structure) used for returning execution-time data from the
  * JobStore to the <code>QuartzSchedulerThread</code>.
  * </p>
@@ -44,21 +45,21 @@ public class TriggerFiredBundle implements java.io.Serializable {
      * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      */
 
-    private JobDetail job;
+    private JobDetail job; // 触发的job
 
-    private OperableTrigger trigger;
+    private OperableTrigger trigger; // 触发器
 
-    private Calendar cal;
+    private Calendar cal; // 触发器关联的日历
 
-    private boolean jobIsRecovering;
+    private boolean jobIsRecovering; // job是否在恢复模式
 
-    private Date fireTime;
+    private Date fireTime; // 点火时间
 
-    private Date scheduledFireTime;
+    private Date scheduledFireTime; // 计划点火时间
 
-    private Date prevFireTime;
+    private Date prevFireTime; // 上一次点火时间
 
-    private Date nextFireTime;
+    private Date nextFireTime; // 下一次点火时间
 
     /*
      * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
